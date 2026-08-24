@@ -829,8 +829,10 @@ void CPythonNetworkStream::RegisterGameHandlers()
 
 	// Target / Mount
 	h[GC::TARGET]                 = { &CPythonNetworkStream::RecvTargetPacket,             sizeof(TPacketGCTarget),                     false };
+		// ENABLE TARGET INFO SYSTEM_AZO ONE
+	h[GC::TARGET_INFO]            = { &CPythonNetworkStream::RecvTargetInfoPacket,         sizeof(TPacketGCTargetInfo),                 false };
+		// END_ENABLE
 	h[GC::MOUNT]                  = { &CPythonNetworkStream::RecvMountPacket,              sizeof(TPacketGCMount),                      false };
-
 	// Points
 	h[GC::PLAYER_POINTS]          = { &CPythonNetworkStream::__RecvPlayerPoints,           sizeof(TPacketGCPoints),                     false };
 
@@ -957,3 +959,64 @@ void CPythonNetworkStream::DumpRecentPackets() const
 		TraceError("  SENT #%u: header=0x%04X len=%u", e.seq, e.header, e.length);
 	}
 }
+
+// ============================================================================
+// ENABLE TARGET INFO SYSTEM_AZO ONE
+// ============================================================================
+bool CPythonNetworkStream::SendTargetInfoLoadPacket(uint32_t dwVID) {
+	TPacketCGTargetInfoLoad pack;
+	pack.header = CG::TARGET_INFO_LOAD;
+	pack.length = sizeof(TPacketCGTargetInfoLoad);
+	pack.dwVID = dwVID;
+	return Send(sizeof(pack), &pack);
+}
+
+bool CPythonNetworkStream::RecvTargetInfoPacket() {
+	TPacketGCTargetInfo packet;
+	if (!Recv(sizeof(TPacketGCTargetInfo), &packet))
+		return false;
+
+	int iDropSize = packet.size - sizeof(TPacketGCTargetInfo);
+	std::vector<TPacketGCTargetInfoDrop> vec_drops;
+
+	if (iDropSize > 0) {
+		int iDropCount = iDropSize / sizeof(TPacketGCTargetInfoDrop);
+		vec_drops.resize(iDropCount);
+		if (!Recv(iDropSize, &vec_drops[0]))
+			return false;
+	}
+
+	PyCallClassMemberFunc(m_apoPhaseWnd[PHASE_WINDOW_GAME],
+		"BINARY_TargetInfo_SetStats",
+		Py_BuildValue("(iiiiiiiiiiiiiii)",
+			packet.dwMaxHP,
+			packet.dwDamageMin,
+			packet.dwDamageMax,
+			packet.dwDefense,
+			packet.dwEXP,
+			packet.dwGoldMin,
+			packet.dwGoldMax,
+			packet.bRegenPct,
+			packet.bRegenCycle,
+			packet.bResistSword,
+			packet.bResistTwohand,
+			packet.bResistBell,
+			packet.bResistDagger,
+			packet.bResistFan,
+			packet.bResistBow
+		)
+	);
+
+	for (size_t i = 0; i < vec_drops.size(); ++i) {
+		PyCallClassMemberFunc(m_apoPhaseWnd[PHASE_WINDOW_GAME],
+			"BINARY_TargetInfo_AddDrop",
+			Py_BuildValue("(iii)", vec_drops[i].dwVnum, vec_drops[i].dwCount, vec_drops[i].iProb)
+		);
+	}
+
+	PyCallClassMemberFunc(m_apoPhaseWnd[PHASE_WINDOW_GAME], "BINARY_TargetInfo_Refresh", Py_BuildValue("()"));
+	return true;
+}
+// ============================================================================
+// END ENABLE TARGET INFO SYSTEM_AZO ONE
+// ============================================================================

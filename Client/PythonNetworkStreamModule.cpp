@@ -586,6 +586,18 @@ PyObject* netOnClickPacket(PyObject* poSelf, PyObject* poArgs)
 	return Py_BuildNone();
 }
 
+// ENABLE TARGET INFO SYSTEM_AZO ONE
+PyObject* netSendTargetInfoLoadPacket(PyObject* poSelf, PyObject* poArgs)
+{
+	int iVID;
+	if (!PyTuple_GetInteger(poArgs, 0, &iVID))
+		return Py_BuildException();
+	CPythonNetworkStream& rkNetStream = CPythonNetworkStream::Instance();
+	rkNetStream.SendTargetInfoLoadPacket(iVID);
+	return Py_BuildNone();
+}
+// END_ENABLE
+
 PyObject* netSendItemUsePacket(PyObject* poSelf, PyObject* poArgs)
 {
 	TItemPos Cell;
@@ -1718,7 +1730,9 @@ void initnet()
 		{ "SendExchangeExitPacket",				netSendExchangeExitPacket,				METH_VARARGS },
 
 		{ "SendOnClickPacket",					netOnClickPacket,						METH_VARARGS },
-		
+		// ENABLE TARGET INFO SYSTEM_AZO ONE
+		{ "SendTargetInfoLoadPacket", netSendTargetInfoLoadPacket, METH_VARARGS },
+		// END_ENABLE
 		// Emoticon String
 		{ "RegisterEmoticonString",				netRegisterEmoticonString,				METH_VARARGS },
 

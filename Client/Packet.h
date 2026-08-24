@@ -124,6 +124,9 @@ namespace CG
     constexpr uint16_t TARGET             = 0x0A01;
     constexpr uint16_t ON_CLICK           = 0x0A02;
     constexpr uint16_t CHARACTER_POSITION = 0x0A60;
+        // ENABLE TARGET INFO SYSTEM_AZO ONE
+    constexpr uint16_t TARGET_INFO_LOAD   = 0x0A03;
+        // END_ENABLE
 
     // World
     constexpr uint16_t FISHING            = 0x0B01;
@@ -253,6 +256,9 @@ namespace GC
     constexpr uint16_t TARGET_UPDATE      = 0x0A11;
     constexpr uint16_t TARGET_DELETE      = 0x0A12;
     constexpr uint16_t TARGET_CREATE_NEW  = 0x0A13;
+        // ENABLE TARGET INFO SYSTEM_AZO ONE
+    constexpr uint16_t TARGET_INFO        = 0x0A14;
+        // END_ENABLE
     constexpr uint16_t AFFECT_ADD         = 0x0A20;
     constexpr uint16_t AFFECT_REMOVE      = 0x0A21;
     constexpr uint16_t SEPCIAL_EFFECT     = 0x0A30;
@@ -800,46 +806,45 @@ typedef struct command_target
     uint32_t       dwVID;
 } TPacketCGTarget;
 
-//ENABLE TARGET INFO SYSTEM_AZO ONE
-typedef struct command_target_info_load
-{
+// ============================================================================
+// ENABLE TARGET INFO SYSTEM_AZO ONE
+// ============================================================================
+struct TPacketCGTargetInfoLoad {
+    uint16_t header;
+    uint16_t length; // DŮLEŽITÉ: Všechny CG packety v tvém klientovi mají toto pole
+    uint32_t dwVID;
+};
 
-	BYTE		header;
-	DWORD		dwVID;
-} TPacketCGTargetInfoLoad;
+struct TPacketGCTargetInfo {
+    uint16_t header;
+    uint16_t size;   // Toto funguje jako 'length' pro GC packety
+    uint32_t dwVID;
+    uint32_t race;
+    uint32_t dwMaxHP;
+    uint32_t dwDamageMin;
+    uint32_t dwDamageMax;
+    uint32_t dwDefense;
+    uint32_t dwEXP;
+    uint32_t dwGoldMin;
+    uint32_t dwGoldMax;
+    uint8_t  bRegenPct;
+    uint8_t  bRegenCycle;
+    uint8_t  bResistSword;
+    uint8_t  bResistTwohand;
+    uint8_t  bResistBell;
+    uint8_t  bResistDagger;
+    uint8_t  bResistFan;
+    uint8_t  bResistBow;
+};
 
-typedef struct packet_target_info
-{
-
-	BYTE		header;
-	WORD		size;
-	DWORD		dwVID;
-	DWORD		race;
-	DWORD		dwMaxHP;
-	DWORD		dwDamageMin;
-	DWORD		dwDamageMax;
-	DWORD		dwDefense;
-	DWORD		dwEXP;
-	DWORD		dwGoldMin;
-	DWORD		dwGoldMax;
-	BYTE		bRegenPct;
-	BYTE		bRegenCycle;
-	BYTE		bResistSword;
-	BYTE		bResistTwohand;
-	BYTE		bResistBell;
-	BYTE		bResistDagger;
-	BYTE		bResistFan;
-	BYTE		bResistBow;
-} TPacketGCTargetInfo;
-
-typedef struct packet_target_info_drop
-{
-
-	DWORD		dwVnum;
-	DWORD		dwCount;
-	int			iProb;
-} TPacketGCTargetInfoDrop;
-//ENABLE TARGET INFO SYSTEM_AZO ONE
+struct TPacketGCTargetInfoDrop {
+    uint32_t dwVnum;
+    uint32_t dwCount;
+    int32_t  iProb;
+};
+// ============================================================================
+// END ENABLE TARGET INFO SYSTEM_AZO ONE
+// ============================================================================
 
 typedef struct command_move
 {
