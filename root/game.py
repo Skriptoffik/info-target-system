@@ -2102,6 +2102,23 @@ class GameWindow(ui.ScriptWindow):
 		app.EnableSpecialCameraMode()
 		ui.EnablePaste(True)
 
+	# ENABLE TARGET INFO SYSTEM_AZO ONE
+	def BINARY_TargetInfo_SetStats(self, hp, dmg_min, dmg_max, defense, exp, gold_min, gold_max, regen_pct, regen_cycle, res_sword, res_twohand, res_bell, res_dagger, res_fan, res_bow):
+		if self.targetBoard and hasattr(self.targetBoard, "targetInfoDialog") and self.targetBoard.targetInfoDialog:
+			if self.targetBoard.targetInfoDialog.IsShow():
+				self.targetBoard.targetInfoDialog.SetStats(hp, dmg_min, dmg_max, defense, exp, gold_min, gold_max, regen_pct, regen_cycle, res_sword, res_twohand, res_bell, res_dagger, res_fan, res_bow)
+
+	def BINARY_TargetInfo_AddDrop(self, vnum, count, prob):
+		if self.targetBoard and hasattr(self.targetBoard, "targetInfoDialog") and self.targetBoard.targetInfoDialog:
+			if self.targetBoard.targetInfoDialog.IsShow():
+				self.targetBoard.targetInfoDialog.AddDrop(vnum, count, prob)
+
+	def BINARY_TargetInfo_Refresh(self):
+		if self.targetBoard and hasattr(self.targetBoard, "targetInfoDialog") and self.targetBoard.targetInfoDialog:
+			if self.targetBoard.targetInfoDialog.IsShow():
+				self.targetBoard.targetInfoDialog.RefreshDrops()
+	# END_ENABLE
+
 	## PrivateShop
 	def __PrivateShop_Open(self):
 		self.interface.OpenPrivateShopInputNameDialog()

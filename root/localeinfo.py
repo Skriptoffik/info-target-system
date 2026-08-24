@@ -27,7 +27,7 @@ VIRTUAL_KEY_ALPHABET_UPPERS			= r"{1234567890}?QWERTYUIOP|+ASDFGHJKL:~'ZXCVBNM<>
 VIRTUAL_KEY_SYMBOLS					= "!@#$%^&*()_+|{}:'<>?~"
 VIRTUAL_KEY_NUMBERS					= "1234567890-=\\[];',./`"
 VIRTUAL_KEY_SYMBOLS_BR				= "!@#$%^&*()_+|{}:'<>?~aaaaeeeiioooouuc"
-
+UITARGETINFO_TITLE_WITH_NAME		= "Informace: "
 # Hot-reload callback registry
 _reloadCallbacks = []
 
