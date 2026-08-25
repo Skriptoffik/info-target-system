@@ -1,29 +1,4 @@
-﻿file(GLOB_RECURSE GAME_SOURCES "*.h" "*.c" "*.cpp")
+﻿file(GLOB_RECURSE COMMON_HEADERS "*.h" "*.hpp")
 
-add_executable(game ${GAME_SOURCES})
-
-target_compile_definitions(game PRIVATE GIT_DESCRIBE="${GIT_DESCRIBE_VERSION}")
-
-target_link_libraries(game
-	common
-	libgame
-	libpoly
-	libsql
-	libthecore
-	liblua
-
-	# external
-	mariadbclient
-	sodium
-)
-
-if (WIN32)
-    target_link_libraries(game ws2_32)
-    # Suppress C4244 from STL <utility> template instantiations with Lua number types
-    target_compile_options(game PRIVATE /wd4244)
-else()
-    target_link_libraries(game pthread)
-    if (CMAKE_SYSTEM_NAME STREQUAL "FreeBSD")
-        target_link_libraries(game md)
-    endif()
-endif()
+add_library(common INTERFACE ${COMMON_HEADERS})
+target_include_directories(common INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})

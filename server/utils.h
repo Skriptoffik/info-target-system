@@ -1,76 +1,109 @@
-﻿#pragma once
-#include <math.h>
-#include <string>
-
-#define IS_SET(flag, bit)		((flag) & (bit))
-#define SET_BIT(var, bit)		((var) |= (bit))
-#define REMOVE_BIT(var, bit)	((var) &= ~(bit))
-#define TOGGLE_BIT(var, bit)	((var) = (var) ^ (bit))
-
-inline float DISTANCE_SQRT(long dx, long dy)
+﻿/*----- atoi function -----*/
+inline bool str_to_number (bool& out, const char *in)
 {
-    return ::sqrt((float)dx * dx + (float)dy * dy);
+	if (0==in || 0==in[0])	return false;
+
+	out = (strtol(in, NULL, 10) != 0);
+	return true;
 }
 
-inline int DISTANCE_APPROX(int dx, int dy)
+inline bool str_to_number (char& out, const char *in)
 {
-	int min, max;
+	if (0==in || 0==in[0])	return false;
 
-	if (dx < 0)
-		dx = -dx;
-
-	if (dy < 0)
-		dy = -dy;
-
-	if (dx < dy)
-	{
-		min = dx;
-		max = dy;
-	}
-	else
-	{
-		min = dy;
-		max = dx;
-	}
-
-    // coefficients equivalent to ( 123/128 * max ) and ( 51/128 * min )
-    return ((( max << 8 ) + ( max << 3 ) - ( max << 4 ) - ( max << 1 ) +
-		( min << 7 ) - ( min << 5 ) + ( min << 3 ) - ( min << 1 )) >> 8 );
+	out = (char) strtol(in, NULL, 10);
+	return true;
 }
 
-#ifndef OS_WINDOWS
-inline WORD MAKEWORD(BYTE a, BYTE b)
+inline bool str_to_number (unsigned char& out, const char *in)
 {
-	return static_cast<WORD>(a) | (static_cast<WORD>(b) << 8);
+	if (0==in || 0==in[0])	return false;
+
+	out = (unsigned char) strtoul(in, NULL, 10);
+	return true;
+}
+
+inline bool str_to_number (short& out, const char *in)
+{
+	if (0==in || 0==in[0])	return false;
+
+	out = (short) strtol(in, NULL, 10);
+	return true;
+}
+
+inline bool str_to_number (unsigned short& out, const char *in)
+{
+	if (0==in || 0==in[0])	return false;
+
+	out = (unsigned short) strtoul(in, NULL, 10);
+	return true;
+}
+
+inline bool str_to_number (int& out, const char *in)
+{
+	if (0==in || 0==in[0])	return false;
+
+	out = (int) strtol(in, NULL, 10);
+	return true;
+}
+
+inline bool str_to_number (unsigned int& out, const char *in)
+{
+	if (0==in || 0==in[0])	return false;
+
+	out = (unsigned int) strtoul(in, NULL, 10);
+	return true;
+}
+
+inline bool str_to_number (long& out, const char *in)
+{
+	if (0==in || 0==in[0])	return false;
+
+	out = (long) strtol(in, NULL, 10);
+	return true;
+}
+
+inline bool str_to_number (unsigned long& out, const char *in)
+{
+	if (0==in || 0==in[0])	return false;
+
+	out = (unsigned long) strtoul(in, NULL, 10);
+	return true;
+}
+
+inline bool str_to_number (long long& out, const char *in)
+{
+	if (0==in || 0==in[0])	return false;
+
+	out = (long long) strtoull(in, NULL, 10);
+	return true;
+}
+
+inline bool str_to_number (float& out, const char *in)
+{
+	if (0==in || 0==in[0])	return false;
+
+	out = (float) strtof(in, NULL);
+	return true;
+}
+
+inline bool str_to_number (double& out, const char *in)
+{
+	if (0==in || 0==in[0])	return false;
+
+	out = (double) strtod(in, NULL);
+	return true;
+}
+
+#ifdef OS_FREEBSD
+inline bool str_to_number (long double& out, const char *in)
+{
+	if (0==in || 0==in[0])	return false;
+
+	out = (long double) strtold(in, NULL);
+	return true;
 }
 #endif
 
-extern void set_global_time(time_t t);
-extern time_t get_global_time();
 
-extern int	dice(int number, int size);
-extern size_t str_lower(const char * src, char * dest, size_t dest_size);
-
-extern void	skip_spaces(char **string);
-
-extern const char *	one_argument(const char *argument, char *first_arg, size_t first_size);
-extern const char *	two_arguments(const char *argument, char *first_arg, size_t first_size, char *second_arg, size_t second_size);
-extern const char *	first_cmd(const char *argument, char *first_arg, size_t first_arg_size, size_t *first_arg_len_result);
-
-extern int CalculateDuration(int iSpd, int iDur);
-
-extern int parse_time_str(const char* str);
-
-extern bool WildCaseCmp(const char *w, const char *s);
-
-namespace utils
-{
-	inline bool iequals(const std::string& a, const std::string& b) {
-		return a.size() == b.size()
-			&& std::equal(a.begin(), a.end(), b.begin(),
-				[](unsigned char ac, unsigned char bc) {
-			return std::tolower(ac) == std::tolower(bc);
-		});
-	}
-}
-
+/*----- atoi function -----*/
