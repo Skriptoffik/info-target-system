@@ -151,9 +151,6 @@ class CPythonNetworkStream : public CNetworkStream, public CSingleton<CPythonNet
 		bool SendCharacterStatePacket(const TPixelPosition& c_rkPPosDst, float fDstRot, UINT eFunc, UINT uArg);
 		bool SendUseSkillPacket(DWORD dwSkillIndex, DWORD dwTargetVID=0);
 		bool SendTargetPacket(DWORD dwVID);
-		// ENABLE TARGET INFO SYSTEM_AZO ONE
-		bool SendTargetInfoLoadPacket(uint32_t dwVID);
-		// END_ENABLE
 
 		// OLDCODE:
 		bool SendCharacterStartWalkingPacket(float fRotation, long lx, long ly);
@@ -500,9 +497,6 @@ class CPythonNetworkStream : public CNetworkStream, public CSingleton<CPythonNet
 
 		// Target
 		bool RecvTargetPacket();
-			// ENABLE TARGET INFO SYSTEM_AZO ONE
-		bool RecvTargetInfoPacket();
-			// END_ENABLE
 		bool RecvViewEquipPacket();
 		bool RecvDamageInfoPacket();
 

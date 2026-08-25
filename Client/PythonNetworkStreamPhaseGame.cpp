@@ -2457,20 +2457,21 @@ bool CPythonNetworkStream::SendFlyTargetingPacket(DWORD dwTargetVID, const TPixe
 
 bool CPythonNetworkStream::RecvCreateFlyPacket()
 {
-    TPacketGCCreateFly kPacket;
-    if (!Recv(sizeof(TPacketGCCreateFly), &kPacket))
-        return false;
+	TPacketGCCreateFly kPacket;
+	if (!Recv(sizeof(TPacketGCCreateFly), &kPacket))
+		return false;
 
-    CFlyingManager& rkFlyMgr = CFlyingManager::Instance();
-    CPythonCharacterManager & rkChrMgr = CPythonCharacterManager::Instance();
-    CInstanceBase * pkStartInst = rkChrMgr.GetInstancePtr(kPacket.dwStartVID);
-    CInstanceBase * pkEndInst = rkChrMgr.GetInstancePtr(kPacket.dwEndVID);
-    if (!pkStartInst || !pkEndInst)
-        return true;
+	CFlyingManager& rkFlyMgr = CFlyingManager::Instance();
+	CPythonCharacterManager & rkChrMgr = CPythonCharacterManager::Instance();
 
-    rkFlyMgr.CreateIndexedFly(kPacket.bType, pkStartInst->GetGraphicThingInstancePtr(), pkEndInst->GetGraphicThingInstancePtr());
-    
-    return true;
+	CInstanceBase * pkStartInst = rkChrMgr.GetInstancePtr(kPacket.dwStartVID);
+	CInstanceBase * pkEndInst = rkChrMgr.GetInstancePtr(kPacket.dwEndVID);
+	if (!pkStartInst || !pkEndInst)
+		return true;
+
+	rkFlyMgr.CreateIndexedFly(kPacket.bType, pkStartInst->GetGraphicThingInstancePtr(), pkEndInst->GetGraphicThingInstancePtr());
+
+	return true;
 }
 
 bool CPythonNetworkStream::SendTargetPacket(DWORD dwVID)
