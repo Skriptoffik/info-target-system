@@ -944,7 +944,6 @@ bool ITEM_MANAGER::CreateDropItem(LPCHARACTER pkChr, LPCHARACTER pkKiller, std::
 					if (item) vec_item.push_back(item);
 				}
 			}
-			// END_OF_MOB_DROP_ITEM_BUG_FIX
 		}
 	}
 

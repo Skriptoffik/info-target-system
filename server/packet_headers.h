@@ -123,6 +123,7 @@ namespace CG
     // UI / Targeting
     constexpr uint16_t TARGET             = 0x0A01;
     constexpr uint16_t ON_CLICK           = 0x0A02;
+    constexpr uint16_t TARGET_INFO_LOAD   = 0x0A03;
     constexpr uint16_t CHARACTER_POSITION = 0x0A60;
 
     // World

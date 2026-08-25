@@ -3438,6 +3438,8 @@ void CInputMain::RegisterHandlers()
 
 int CInputMain::Analyze(LPDESC d, uint16_t wHeader, const char * c_pData)
 {
+	sys_log(0, "INPUT_MAIN: Received header 0x%04X (%d)", wHeader, wHeader);
+	
 	LPCHARACTER ch = d->GetCharacter();
 
 	if (!ch)

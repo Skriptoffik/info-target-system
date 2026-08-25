@@ -217,10 +217,10 @@ class CMobItemGroup
 		}
 		// END_OF_MOB_DROP_ITEM_BUG_FIX
 
-		const SMobItemGroupInfo& GetOne() const
-		{
-			return m_vecItems[GetOneIndex()];
-		}
+	const SMobItemGroupInfo& GetOne() const
+	{
+		return m_vecItems[GetOneIndex()];
+	}
 
 	private:
 		DWORD m_dwMobVnum;
@@ -252,7 +252,7 @@ class CDropItemGroup
 	{
 	}
 
-	const std::vector<SDropItemGroupInfo> & GetVector()
+	const std::vector<SDropItemGroupInfo> & GetVector() const
 	{
 		return m_vec_items;
 	}
@@ -299,7 +299,7 @@ class CLevelItemGroup
 			m_vec_items.push_back(SLevelItemGroupInfo(dwItemVnum, dwPct, iCount));
 		}
 
-		const std::vector<SLevelItemGroupInfo> & GetVector()
+		const std::vector<SLevelItemGroupInfo> & GetVector() const
 		{
 			return m_vec_items;
 		}
