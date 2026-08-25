@@ -69,14 +69,6 @@ class TargetBoard(ui.ThinBoard):
 			nonplayer.KING : localeInfo.TARGET_LEVEL_KING,
 		}
 
-	# ENABLE TARGET INFO SYSTEM_AZO ONE
-	def OnPressedInfoButton(self):
-		import uitargetinfo
-		if not hasattr(self, "targetInfoDialog"):
-			self.targetInfoDialog = uitargetinfo.TargetInfoBoard()
-		self.targetInfoDialog.Open(self.GetTargetVID(), self.GetTargetName())
-	# END_ENABLE
-
 	def __init__(self):
 		ui.ThinBoard.__init__(self)
 
@@ -156,19 +148,6 @@ class TargetBoard(ui.ThinBoard):
 		self.name = name
 		self.hpGauge = hpGauge
 		self.closeButton = closeButton
-
-		# ENABLE TARGET INFO SYSTEM_AZO ONE
-		self.infoButton = ui.Button()
-		self.infoButton.SetParent(self)
-		self.infoButton.SetUpVisual("d:/ymir work/ui/public/Small_Button_01.sub")
-		self.infoButton.SetOverVisual("d:/ymir work/ui/public/Small_Button_02.sub")
-		self.infoButton.SetDownVisual("d:/ymir work/ui/public/Small_Button_03.sub")
-		self.infoButton.SetPosition(10, 10)  # Uprav pozici podle potřeby
-		self.infoButton.SetText("Info")
-		self.infoButton.SetEvent(ui.__mem_func__(self.OnPressedInfoButton))
-		self.infoButton.Show()
-		# END_ENABLE
-
 		self.nameString = 0
 		self.nameLength = 0
 		self.vid = 0
